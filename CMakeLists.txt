@@ -12,8 +12,8 @@ if(NOT CMAKE_BUILD_TYPE)
     message(STATUS ${message})
     string(CONCAT out
         "Choose the type of build, options are: "
-        "None(CMAKE_CXX_FLAGS or CMAKE_C_FLAGS used) ""
-        Debug Release RelWithDebInfo MinSizeRel."
+        "None(CMAKE_CXX_FLAGS or CMAKE_C_FLAGS used) "
+        "Debug Release RelWithDebInfo MinSizeRel."
     )
     set(CMAKE_BUILD_TYPE "${default_build_type}" CACHE STRING ${out} FORCE)
 endif()
