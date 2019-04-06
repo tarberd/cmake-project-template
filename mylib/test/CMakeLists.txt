@@ -10,10 +10,10 @@ enable_testing()
 set(sources main.cpp)
 
 # Add test executable
-add_executable(my_test ${sources})
+add_executable(mytest ${sources})
 
 # Link test with libraries
-target_link_libraries(my_test say Catch2::Catch2)
+target_link_libraries(mytest mylib Catch2::Catch2)
 
 # Add test to ctest
-add_test(NAME test COMMAND my_test)
+add_test(NAME test COMMAND mytest)
