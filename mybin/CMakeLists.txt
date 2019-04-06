@@ -26,7 +26,7 @@ project(mybin VERSION 0.0.1)
 find_package(mylib REQUIRED)
 
 # Set target name
-set(target_name mylib)
+set(target_name mybin)
 
 ###############################################################################
 # Create Library
@@ -35,7 +35,7 @@ set(target_name mylib)
 set(sources src/main.cpp)
 
 add_executable(${target_name} ${sources})
-add_executable(${export_namespace_name}${target_name} ALIAS ${target_name})
+# add_executable(${export_namespace_name}${target_name} ALIAS ${target_name})
 
 target_link_libraries(${target_name} mylib::mylib)
 

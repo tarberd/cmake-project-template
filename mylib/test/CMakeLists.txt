@@ -3,9 +3,6 @@
 ###############################################################################
 find_package(Catch2 REQUIRED)
 
-# Must enable test to use ctest
-enable_testing()
-
 # Set test sources
 set(sources main.cpp)
 
