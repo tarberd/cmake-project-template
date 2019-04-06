@@ -23,5 +23,13 @@ endif()
 ###############################################################################
 project(mylib VERSION 0.0.1)
 
+set(as_subproject mylib)
+
+macro(find_package)
+    if(NOT ${ARG0} IN_LIST as_subproject)
+        _find_package(${ARGV})
+    endif()
+endmacro()
+
 add_subdirectory(mylib)
 add_subdirectory(mybin)

@@ -23,25 +23,33 @@ endif()
 ###############################################################################
 project(mylib VERSION 0.0.1)
 
+# Set target name
+set(target_name mylib)
+
+# Set export variables
+set(targets_export_name ${PROJECT_NAME}-exports)
+set(export_namespace_name ${PROJECT_NAME}::)
+
+###############################################################################
+# Create target
+###############################################################################
+
 # Set Library sources
 set(sources src/hello.cpp)
 
 # Set Library public headers
 set(public_headers include/hello/hello.h)
 
-###############################################################################
-# Create Library
-###############################################################################
-set(library_name mylib)
-add_library(${library_name} ${sources})
+add_library(${target_name} ${sources})
+add_library(${export_namespace_name}${target_name} ALIAS ${target_name})
 
-set_target_properties(${library_name} PROPERTIES
+set_target_properties(${target_name} PROPERTIES
     VERSION ${PROJECT_VERSION}
     SOVERSION ${PROJECT_VERSION}
     PUBLIC_HEADER ${public_headers}
 )
 
-target_include_directories(${library_name} PUBLIC
+target_include_directories(${target_name} PUBLIC
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>
 )
@@ -58,9 +66,8 @@ add_subdirectory(test)
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
-set(targets_export_name ${PROJECT_NAME}-exports)
-export(TARGETS ${library_name}
-    NAMESPACE ${PROJECT_NAME}::
+export(TARGETS ${target_name}
+    NAMESPACE ${export_namespace_name}
     FILE ${PROJECT_BINARY_DIR}/${targets_export_name}.cmake
 )
 
@@ -75,7 +82,7 @@ configure_package_config_file(
     INSTALL_DESTINATION ${CMAKE_INSTALL_DATADIRA}/${PROJECT_NAME}/cmake
 )
 
-install(TARGETS ${library_name}
+install(TARGETS ${target_name}
     EXPORT ${targets_export_name}
     LIBRARY
         COMPONENT Libraries
@@ -96,6 +103,6 @@ install(
 
 install(EXPORT ${targets_export_name}
     COMPONENT Development
-    NAMESPACE ${PROJECT_NAME}::
+    NAMESPACE ${export_namespace_name}
     DESTINATION ${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME}/cmake
 )

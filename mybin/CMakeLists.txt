@@ -23,7 +23,10 @@ endif()
 ###############################################################################
 project(mybin VERSION 0.0.1)
 
-find_package(mylib)
+find_package(mylib REQUIRED)
+
+# Set target name
+set(target_name mylib)
 
 ###############################################################################
 # Create Library
@@ -31,8 +34,8 @@ find_package(mylib)
 # Set sources
 set(sources src/main.cpp)
 
-set(target_name mybin)
 add_executable(${target_name} ${sources})
+add_executable(${export_namespace_name}${target_name} ALIAS ${target_name})
 
 target_link_libraries(${target_name} mylib::mylib)
 
