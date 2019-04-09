@@ -38,7 +38,7 @@ set(export_namespace_name ${PROJECT_NAME}::)
 set(sources src/hello.cpp)
 
 # Set Library public headers
-set(public_headers include/hello/hello.h)
+set(public_headers include/mylib/hello.h)
 
 add_library(${target_name} ${sources})
 add_library(${export_namespace_name}${target_name} ALIAS ${target_name})
