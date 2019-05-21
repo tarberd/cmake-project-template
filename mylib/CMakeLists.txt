@@ -46,13 +46,15 @@ add_library(${export_namespace_name}${target_name} ALIAS ${target_name})
 set_target_properties(${target_name} PROPERTIES
     VERSION ${PROJECT_VERSION}
     SOVERSION ${PROJECT_VERSION}
-    PUBLIC_HEADER ${public_headers}
+    PUBLIC_HEADER "${public_headers}"
 )
 
 target_include_directories(${target_name} PUBLIC
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>
 )
+
+target_compile_features(${target_name} PUBLIC cxx_std_17)
 
 ###############################################################################
 # Test Library

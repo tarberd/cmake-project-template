@@ -35,7 +35,8 @@ set(target_name mybin)
 set(sources src/main.cpp)
 
 add_executable(${target_name} ${sources})
-# add_executable(${export_namespace_name}${target_name} ALIAS ${target_name})
+
+target_compile_features(${target_name} PRIVATE cxx_std_17)
 
 target_link_libraries(${target_name} mylib::mylib)
 
