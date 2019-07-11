@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.7.2)
 # Set default CMAKE_BUILD_TYPE
 ###############################################################################
 if(NOT CMAKE_BUILD_TYPE)
-    set(default_build_type "Release")
+    set(default_build_type "Debug")
     string(CONCAT message
         "Setting CMAKE_BUILD_TYPE to '${default_build_type}' "
         "as none was specified."
@@ -21,7 +21,7 @@ endif()
 ###############################################################################
 # Create Project
 ###############################################################################
-project(my-big-projec VERSION 0.0.1)
+project(my-macro-projec VERSION 0.0.1)
 
 set(as_subproject mylib)
 
