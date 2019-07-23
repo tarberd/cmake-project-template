@@ -21,10 +21,11 @@ endif()
 ###############################################################################
 # Create Project
 ###############################################################################
-project(mylib VERSION 0.0.1)
+project(libhello VERSION 0.0.1)
 
-# Set target name
-set(target_name mylib)
+# Set target name and target output (lib wil be automaticaly appended)
+set(target_name libhello)
+set(target_output_name hello)
 
 # Set export variables
 set(targets_export_name ${PROJECT_NAME}-exports)
@@ -38,12 +39,13 @@ set(export_namespace_name ${PROJECT_NAME}::)
 set(sources src/hello.cpp)
 
 # Set Library public headers
-set(public_headers include/mylib/hello.h)
+set(public_headers include/hello/hello.h)
 
 add_library(${target_name} ${sources})
 add_library(${export_namespace_name}${target_name} ALIAS ${target_name})
 
 set_target_properties(${target_name} PROPERTIES
+    OUTPUT_NAME ${target_output_name}
     VERSION ${PROJECT_VERSION}
     SOVERSION ${PROJECT_VERSION}
     PUBLIC_HEADER "${public_headers}"

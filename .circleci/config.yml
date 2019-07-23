@@ -26,6 +26,7 @@ jobs:
             cd build
             cmake ..
             make
+            make test
             mkdir pkg
             make DESTDIR=pkg install
 

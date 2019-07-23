@@ -21,12 +21,12 @@ endif()
 ###############################################################################
 # Create Project
 ###############################################################################
-project(mybin VERSION 0.0.1)
+project(hello VERSION 0.0.1)
 
-find_package(mylib REQUIRED)
+find_package(libhello REQUIRED)
 
 # Set target name
-set(target_name mybin)
+set(target_name hello)
 
 ###############################################################################
 # Create Library
@@ -38,7 +38,7 @@ add_executable(${target_name} ${sources})
 
 target_compile_features(${target_name} PRIVATE cxx_std_17)
 
-target_link_libraries(${target_name} mylib::mylib)
+target_link_libraries(${target_name} libhello::libhello)
 
 ###############################################################################
 # Test

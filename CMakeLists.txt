@@ -23,7 +23,7 @@ endif()
 ###############################################################################
 project(my-macro-projec VERSION 0.0.1)
 
-set(as_subproject mylib)
+set(as_subproject libhello)
 
 macro(find_package)
     if(NOT ${ARGV0} IN_LIST as_subproject)
@@ -34,5 +34,5 @@ endmacro()
 # Must enable test to use ctest
 enable_testing()
 
-add_subdirectory(mylib)
-add_subdirectory(mybin)
+add_subdirectory(libhello)
+add_subdirectory(hello)
