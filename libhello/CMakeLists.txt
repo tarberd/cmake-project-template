@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.7.2)
+cmake_minimum_required(VERSION 3.11)
 
 ###############################################################################
 # Set default CMAKE_BUILD_TYPE
@@ -37,9 +37,6 @@ set(export_namespace_name ${PROJECT_NAME}::)
 
 # Set Library sources
 set(sources src/hello.cpp)
-
-# Set Library public headers
-set(public_headers include/hello/hello.h)
 
 add_library(${target_name} ${sources})
 add_library(${export_namespace_name}${target_name} ALIAS ${target_name})
@@ -92,9 +89,17 @@ install(TARGETS ${target_name}
         COMPONENT Libraries
         NAMELINK_COMPONENT Development
         DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE
+        COMPONENT Libraries
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}
     PUBLIC_HEADER
         COMPONENT Development
-        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
+
+install(DIRECTORY include/${target_output_name}
+    COMPONENT Development
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 
 install(
