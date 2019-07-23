@@ -1,4 +1,4 @@
-#include <mylib/hello.h>
+#include <hello/hello.h>
 
 int main() {
   hello::hello("world!");

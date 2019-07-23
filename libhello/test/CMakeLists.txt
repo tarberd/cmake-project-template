@@ -10,7 +10,7 @@ set(sources main.cpp)
 add_executable(mytest ${sources})
 
 # Link test with libraries
-target_link_libraries(mytest mylib Catch2::Catch2)
+target_link_libraries(mytest libhello Catch2::Catch2)
 
 # Add test to ctest
 add_test(NAME test COMMAND mytest)

@@ -1,0 +1,38 @@
+version: 2.0
+
+jobs:
+  build:
+    docker:
+      - image: alpine:edge
+    steps:
+      - run:
+          name: install
+          command: |
+            apk upgrade
+            apk add g++ cmake make git
+            git clone https://github.com/catchorg/Catch2.git
+            cd Catch2
+            cmake -Bbuild -H. -DBUILD_TESTING=OFF
+            cmake --build build/ --target install
+            cd ..
+            rm -rf Catch2
+      - checkout
+      - run:
+          name: build
+          command: |
+            apk upgrade
+            apk add g++ cmake make
+            mkdir build
+            cd build
+            cmake ..
+            make
+            make test
+            mkdir pkg
+            make DESTDIR=pkg install
+
+workflows:
+ version: 2
+ Example_Workflow:
+   jobs:
+     - build
+
