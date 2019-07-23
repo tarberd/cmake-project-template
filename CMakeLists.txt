@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.7.2)
+cmake_minimum_required(VERSION 3.11)
 
 ###############################################################################
 # Set default CMAKE_BUILD_TYPE
@@ -21,7 +21,7 @@ endif()
 ###############################################################################
 # Create Project
 ###############################################################################
-project(my-macro-projec VERSION 0.0.1)
+project(my-macro-projec VERSION 0.1.0)
 
 set(as_subproject libhello)
 

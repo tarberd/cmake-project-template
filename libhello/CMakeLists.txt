@@ -21,7 +21,7 @@ endif()
 ###############################################################################
 # Create Project
 ###############################################################################
-project(libhello VERSION 0.0.1)
+project(libhello VERSION 0.1.0)
 
 # Set target name and target output (lib wil be automaticaly appended)
 set(target_name libhello)
