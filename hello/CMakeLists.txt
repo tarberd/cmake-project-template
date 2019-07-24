@@ -3,8 +3,8 @@ cmake_minimum_required(VERSION 3.11)
 ###############################################################################
 # Set default CMAKE_BUILD_TYPE
 ###############################################################################
-if(NOT CMAKE_BUILD_TYPE)
-    set(default_build_type "Release")
+if(NOT DEFINED CMAKE_BUILD_TYPE)
+  set(default_build_type "Debug")
     string(CONCAT message
         "Setting CMAKE_BUILD_TYPE to '${default_build_type}' "
         "as none was specified."

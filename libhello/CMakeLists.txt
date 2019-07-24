@@ -3,8 +3,8 @@ cmake_minimum_required(VERSION 3.11)
 ###############################################################################
 # Set default CMAKE_BUILD_TYPE
 ###############################################################################
-if(NOT CMAKE_BUILD_TYPE)
-    set(default_build_type "Release")
+if(NOT DEFINED CMAKE_BUILD_TYPE)
+    set(default_build_type "Debug")
     string(CONCAT message
         "Setting CMAKE_BUILD_TYPE to '${default_build_type}' "
         "as none was specified."
@@ -17,6 +17,19 @@ if(NOT CMAKE_BUILD_TYPE)
     )
     set(CMAKE_BUILD_TYPE "${default_build_type}" CACHE STRING ${out} FORCE)
 endif()
+
+###############################################################################
+# Set default BUILD_TESTS
+###############################################################################
+if(NOT DEFINED BUILD_TESTS)
+    set(BUILD_TESTS TRUE)
+    string(CONCAT message
+      "Setting BUILD_TESTS to 'TRUE' "
+      "as none was specified."
+    )
+    message(STATUS ${message})
+endif()
+
 
 ###############################################################################
 # Create Project
@@ -58,8 +71,10 @@ target_compile_features(${target_name} PUBLIC cxx_std_17)
 ###############################################################################
 # Test Library
 ###############################################################################
-enable_testing()
-add_subdirectory(test)
+if(BUILD_TESTS)
+    enable_testing()
+    add_subdirectory(test)
+endif()
 
 ###############################################################################
 # Install rules

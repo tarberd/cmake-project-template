@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.11)
 ###############################################################################
 # Set default CMAKE_BUILD_TYPE
 ###############################################################################
-if(NOT CMAKE_BUILD_TYPE)
+if(NOT DEFINED CMAKE_BUILD_TYPE)
     set(default_build_type "Debug")
     string(CONCAT message
         "Setting CMAKE_BUILD_TYPE to '${default_build_type}' "
@@ -21,7 +21,7 @@ endif()
 ###############################################################################
 # Create Project
 ###############################################################################
-project(my-macro-projec VERSION 0.1.0)
+project(my-macro-projec)
 
 set(as_subproject libhello)
 
