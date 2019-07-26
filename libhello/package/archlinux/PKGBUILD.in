@@ -1,0 +1,43 @@
+# Maintainer: Bernardo Ferrari <bernardo.mferrari@gmail.com>
+
+pkgname=libhello-%branch-name%
+pkgver=%pkg-version%
+pkgrel=1
+pkgdesc="Simple hello library with a void hello(std::string) function."
+arch=('x86_64')
+url="https://github.com/tarberd/cmake-project-template"
+license=('GPL')
+depends=('glibc' 'gcc-libs')
+makedepends=('cmake>=3.11.0')
+checkdepends=('catch2')
+source=("$pkgname-$pkgver.tar.gz::https://github.com/tarberd/cmake-project-template/archive/%sha%.tar.gz")
+md5sums=('SKIP')
+# %md5sums%
+
+build() {
+	cd "cmake-project-template-%sha%/libhello"
+  cmake \
+    -DBUILD_TESTS=false \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DBUILD_SHARED_LIBS=on \
+    -DCMAKE_BUILD_TYPE=Release \
+    .
+	make -j
+}
+
+check() {
+	cd "cmake-project-template-%sha%/libhello"
+  cmake \
+    -DBUILD_TESTS=true \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DBUILD_SHARED_LIBS=on \
+    -DCMAKE_BUILD_TYPE=Release \
+    .
+  make
+	make test
+}
+
+package() {
+	cd "cmake-project-template-%sha%/libhello"
+	make DESTDIR="$pkgdir/" install
+}
