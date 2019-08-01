@@ -1,6 +1,51 @@
 version: 2.0
 
 jobs:
+  archlinux:
+    docker:
+      - image: archlinux/base
+    steps:
+      - run:
+          name: prepare
+          command: |
+            pacman -Syu --needed --noconfirm base-devel git ssh cmake catch2
+      - checkout
+      - run:
+          name: build
+          command: |
+            mkdir build
+            cd build
+            cmake \
+              -DBUILD_TESTS=false \
+              -DBUILD_SHARED_LIBS=true \
+              -DCMAKE_BUILD_TYPE=Release \
+              -DCMAKE_INSTALL_PREFIX=/usr \
+              ..
+            make
+      - run:
+          name: test
+          command: |
+            cd build
+            cmake \
+              -DBUILD_TESTS=true \
+              -DBUILD_SHARED_LIBS=true \
+              -DCMAKE_BUILD_TYPE=Release \
+              -DCMAKE_INSTALL_PREFIX=/usr \
+              ..
+            make
+            make test
+      - run:
+          name: generate-source-package
+          command: |
+            useradd -m builder
+            cd libhello/package/archlinux
+            ./configure.sh
+      - run:
+          name: make-package
+          command: |
+            pacman -S --noconfirm devtools
+            cd libhello/package/archlinux/source-package
+            sudo -u builder extra-x86_64-build
   build:
     docker:
       - image: alpine:edge

@@ -14,7 +14,26 @@ sha=$(git rev-parse HEAD)
 
 echo "SHA: $sha"
 
+output_dir=source-package
+
+echo "Configured source package directory: $output_dir"
+if [ ! -d "$output_dir" ]; then
+    mkdir -p "$output_dir"
+fi
+
 sed -e "s/%branch-name%/$branch_name/g" \
     -e "s/%pkg-version%/$pkg_version/g" \
     -e "s/%sha%/$sha/g" \
-    < PKGBUILD.in > PKGBUILD
+    < PKGBUILD.in > "$output_dir/PKGBUILD"
+
+cd "$output_dir"
+md5sums=$(makepkg -g)
+
+mv PKGBUILD PKGBUILD.md5sums
+
+sed -e "s/md5sums\=('SKIP')/$md5sums/g" \
+    < PKGBUILD.md5sums > PKGBUILD
+
+rm PKGBUILD.md5sums
+
+echo "md5sums: $md5sums"

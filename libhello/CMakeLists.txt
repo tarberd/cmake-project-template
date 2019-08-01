@@ -30,7 +30,6 @@ if(NOT DEFINED BUILD_TESTS)
     message(STATUS ${message})
 endif()
 
-
 ###############################################################################
 # Create Project
 ###############################################################################
@@ -58,7 +57,6 @@ set_target_properties(${target_name} PROPERTIES
     OUTPUT_NAME ${target_output_name}
     VERSION ${PROJECT_VERSION}
     SOVERSION ${PROJECT_VERSION}
-    PUBLIC_HEADER "${public_headers}"
 )
 
 target_include_directories(${target_name} PUBLIC
@@ -107,9 +105,6 @@ install(TARGETS ${target_name}
     ARCHIVE
         COMPONENT Libraries
         DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    PUBLIC_HEADER
-        COMPONENT Development
-        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
 )
 
 install(DIRECTORY include/${target_output_name}
