@@ -8,7 +8,7 @@ jobs:
       - run:
           name: prepare
           command: |
-            pacman -Syu --needed --noconfirm --noprogressbar base-devel git ssh cmake catch2
+            pacman -Syu --needed --noconfirm --noprogressbar base-devel git openssh cmake catch2
       - checkout
       - run:
           name: build
