@@ -10,7 +10,7 @@ jobs:
           command: |
             pacman -Syu --needed --noconfirm --noprogressbar base-devel git openssh cmake catch2
             sed --in-place 's/^#\s*\(%wheel\s\+ALL=(ALL)\s\+NOPASSWD:\s\+ALL\)/\1/' /etc/sudoers
-            sed --in-place 's/\(root\s\+ALL=(ALL)\)/\1 NOPASSWD:/' /etc/sudoers
+            echo "tester ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoer
             useradd -m -G wheel builder
       - checkout:
           path: /home/builder/project
@@ -51,7 +51,7 @@ jobs:
             cd libhello/package/archlinux
             sudo -u builder ./configure.sh
       - run:
-          name: build-source-package
+          name: build-package
           working_directory: /home/builder/project
           command: |
             pacman -S --noconfirm --noprogressbar devtools
