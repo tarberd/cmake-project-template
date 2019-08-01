@@ -9,6 +9,9 @@ jobs:
           name: prepare
           command: |
             pacman -Syu --needed --noconfirm --noprogressbar base-devel git openssh cmake catch2
+            sed --in-place 's/^#\s*\(%wheel\s\+ALL=(ALL)\s\+NOPASSWD:\s\+ALL\)/\1/' /etc/sudoers
+            sed --in-place 's/\(root\s\+ALL=(ALL)\)/\1 NOPASSWD:/' /etc/sudoers
+            useradd -m -G wheel builder
       - checkout
       - run:
           name: build
@@ -37,7 +40,6 @@ jobs:
       - run:
           name: generate-source-package
           command: |
-            useradd -m builder
             cd libhello/package/archlinux
             ./configure.sh
       - run:
