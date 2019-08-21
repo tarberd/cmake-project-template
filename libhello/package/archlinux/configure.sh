@@ -2,7 +2,7 @@
 
 set -e
 
-branch_name=$(git symbolic-ref --short HEAD)
+branch_name="test"
 
 echo "Branch name: $branch_name"
 
