@@ -11,7 +11,6 @@ sources:
 tasks:
   - prepare-builder-user: |
       sudo sed --in-place 's/^#\s*\(%wheel\s\+ALL=(ALL)\s\+NOPASSWD:\s\+ALL\)/\1/' /etc/sudoers
-      echo "tester ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoer
       useradd -m -G wheel builder
   - build-package: |
       chown -R builder cmake-project-template
