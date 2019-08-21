@@ -9,12 +9,8 @@ packages:
 sources:
   - https://github.com/tarberd/cmake-project-template
 tasks:
-  - prepare-builder-user: |
-      sudo sed --in-place 's/^#\s*\(%wheel\s\+ALL=(ALL)\s\+NOPASSWD:\s\+ALL\)/\1/' /etc/sudoers
-      useradd -m -G wheel builder
   - build-package: |
-      chown -R builder cmake-project-template
       cd cmake-project-template/libhello/package/archlinux
-      sudo -u builder ./configure.sh
+      ./configure.sh
       cd source-package
-      sudo -u builder extra-x86_64-build
+      extra-x86_64-build
