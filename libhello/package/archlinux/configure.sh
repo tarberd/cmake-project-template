@@ -2,7 +2,7 @@
 
 set -e
 
-branch_name="test"
+branch_name=$(echo $GITHUB_REF | sed 's:*/*/\(*\):\1/g')
 
 echo "Branch name: $branch_name"
 
