@@ -2,9 +2,15 @@
 
 set -e
 
-branch_name=$(echo $GITHUB_REF | sed 's:[^/]*/[^/]*/\([^\]*\):\1:g')
+if [[ -v "$GITHUB_REF" ]]; then
+  branch_name=$(echo $GITHUB_REF | sed 's:[^/]*/[^/]*/\([^\]*\):\1:g')
+else
+  branch_name=$(git symbolic-ref --short HEAD)
+fi
 
-echo "Branch name: $branch_name"
+pkgname_sufix="-$branch_name"
+
+echo "Package name sufix: $pkgname_sufix"
 
 pkg_version=$(set -o pipefail
   git describe --long 2>/dev/null | sed 's/\([^-]*-g\)/r\1/;s/-/./g' ||
@@ -24,7 +30,7 @@ if [ ! -d "$output_dir" ]; then
     mkdir -p "$output_dir"
 fi
 
-sed -e "s/%branch-name%/$branch_name/g" \
+sed -e "s/%pkgname-sufix%/$pkgname_sufix/g" \
     -e "s/%pkg-version%/$pkg_version/g" \
     -e "s/%sha%/$sha/g" \
     < PKGBUILD.in > "$output_dir/PKGBUILD"

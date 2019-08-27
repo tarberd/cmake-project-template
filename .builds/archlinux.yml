@@ -12,5 +12,4 @@ tasks:
   - build-package: |
       cd cmake-project-template/libhello/package/archlinux
       ./configure.sh
-      cd source-package
-      extra-x86_64-build
+      ./build.sh
