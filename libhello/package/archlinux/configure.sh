@@ -2,7 +2,7 @@
 
 set -e
 
-if [[ -v "${GITHUB_REF}" ]]; then
+if [[ -v GITHUB_REF ]]; then
   branch_name=$(echo $GITHUB_REF | sed 's:[^/]*/[^/]*/\([^\]*\):\1:g')
 else
   branch_name=$(git symbolic-ref --short HEAD)
