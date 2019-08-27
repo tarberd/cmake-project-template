@@ -1,0 +1,15 @@
+image: archlinux
+packages:
+  - base-devel
+  - devtools
+  - git
+  - openssh
+  - cmake
+  - catch2
+sources:
+  - https://github.com/tarberd/cmake-project-template
+tasks:
+  - build-package: |
+      cd cmake-project-template/libhello/package/archlinux
+      ./configure.sh
+      ./build.sh
