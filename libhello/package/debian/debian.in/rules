@@ -1,0 +1,12 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@ \
+		--sourcedirectory=libhello \
+		--buildsystem=cmake
+
+override_dh_auto_configure:
+	dh_auto_configure -- \
+		-DBUILD_TESTS=false \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DBUILD_SHARED_LIBS=true
