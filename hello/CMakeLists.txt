@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.11)
+cmake_minimum_required(VERSION 3.24)
 
 ###############################################################################
 # Set default CMAKE_BUILD_TYPE
@@ -23,7 +23,9 @@ endif()
 ###############################################################################
 project(hello VERSION 0.1.0)
 
-find_package(libhello REQUIRED)
+# find_package(libhello REQUIRED)
+find_package(fmt REQUIRED)
+find_package(range-v3 REQUIRED)
 
 # Set target name
 set(target_name hello)
@@ -36,9 +38,14 @@ set(sources src/main.cpp)
 
 add_executable(${target_name} ${sources})
 
-target_compile_features(${target_name} PRIVATE cxx_std_17)
+set_target_properties(${target_name}
+    PROPERTIES
+        CXX_STANDARD_REQUIRED YES
+        CXX_EXTENSIONS NO
+)
+target_compile_features(${target_name} PRIVATE cxx_std_23)
 
-target_link_libraries(${target_name} libhello::libhello)
+target_link_libraries(${target_name} fmt::fmt)
 
 ###############################################################################
 # Test

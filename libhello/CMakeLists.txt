@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.11)
+cmake_minimum_required(VERSION 3.24)
 
 ###############################################################################
 # Set default CMAKE_BUILD_TYPE
@@ -35,6 +35,8 @@ endif()
 ###############################################################################
 project(libhello VERSION 0.1.0)
 
+find_package(fmt)
+
 # Set target name and target output (lib wil be automaticaly appended)
 set(target_name libhello)
 set(target_output_name hello)
@@ -48,7 +50,7 @@ set(export_namespace_name ${PROJECT_NAME}::)
 ###############################################################################
 
 # Set Library sources
-set(sources src/hello.cpp)
+set(sources src/hello.cpp src/hello_consumer.cpp)
 
 add_library(${target_name} ${sources})
 add_library(${export_namespace_name}${target_name} ALIAS ${target_name})
@@ -64,14 +66,26 @@ target_include_directories(${target_name} PUBLIC
     $<INSTALL_INTERFACE:include>
 )
 
-target_compile_features(${target_name} PUBLIC cxx_std_17)
+target_compile_features(${target_name} PUBLIC cxx_std_23)
+
+target_link_libraries(${target_name} PRIVATE fmt::fmt)
 
 ###############################################################################
 # Test Library
 ###############################################################################
 if(BUILD_TESTS)
-    enable_testing()
-    add_subdirectory(test)
+    # enable_testing()
+    # add_subdirectory(test)
+    find_package(GTest)
+    set(ENV{BUILD_TESTS} ${BUILD_TESTS})
+    add_executable(libhello_test src/hello.cpp src/hello_consumer.cpp)
+    target_include_directories(libhello_test PUBLIC
+        $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
+    )
+    target_link_libraries(libhello_test 
+        PRIVATE GTest::gtest_main
+    )
 endif()
 
 ###############################################################################
