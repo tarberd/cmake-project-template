@@ -19,7 +19,7 @@ find_package(helloworld REQUIRED)
 set(target_name hello)
 
 # Set sources
-set(sources src/hello/main.cpp)
+set(sources src/hello.main.cpp)
 
 add_executable(${target_name} ${sources})
 

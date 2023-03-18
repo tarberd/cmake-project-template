@@ -1,6 +1,0 @@
-*.xz
-*.gz
-/pkg
-/src
-source-package
-PKGBUILD

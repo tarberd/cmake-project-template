@@ -10,6 +10,5 @@ sources:
   - https://github.com/tarberd/cmake-project-template
 tasks:
   - build-package: |
-      cd cmake-project-template/libhello/package/archlinux
-      ./configure.sh
-      ./build.sh
+      cmake -S . -B build -G Ninja
+      ninja -C build
