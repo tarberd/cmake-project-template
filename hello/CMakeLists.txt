@@ -1,44 +1,31 @@
 cmake_minimum_required(VERSION 3.11)
 
-###############################################################################
-# Set default CMAKE_BUILD_TYPE
-###############################################################################
-if(NOT DEFINED CMAKE_BUILD_TYPE)
-  set(default_build_type "Debug")
-    string(CONCAT message
-        "Setting CMAKE_BUILD_TYPE to '${default_build_type}' "
-        "as none was specified."
-    )
-    message(STATUS ${message})
-    string(CONCAT out
-        "Choose the type of build, options are: "
-        "None(CMAKE_CXX_FLAGS or CMAKE_C_FLAGS used) "
-        "Debug Release RelWithDebInfo MinSizeRel."
-    )
-    set(CMAKE_BUILD_TYPE "${default_build_type}" CACHE STRING ${out} FORCE)
-endif()
+set(CMAKE_MODULE_PATH cmake)
+include(preamble)
 
 ###############################################################################
 # Create Project
 ###############################################################################
 project(hello VERSION 0.1.0)
 
-find_package(libhello REQUIRED)
+find_package(helloworld REQUIRED)
 
-# Set target name
-set(target_name hello)
 
 ###############################################################################
 # Create Library
 ###############################################################################
+
+# Set target name
+set(target_name hello)
+
 # Set sources
-set(sources src/main.cpp)
+set(sources src/hello/main.cpp)
 
 add_executable(${target_name} ${sources})
 
-target_compile_features(${target_name} PRIVATE cxx_std_17)
+target_compile_features(${target_name} PRIVATE cxx_std_20)
 
-target_link_libraries(${target_name} libhello::libhello)
+target_link_libraries(${target_name} helloworld::helloworld)
 
 ###############################################################################
 # Test
@@ -89,4 +76,3 @@ install(EXPORT ${targets_export_name}
     NAMESPACE ${PROJECT_NAME}::
     DESTINATION ${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME}/cmake
 )
-

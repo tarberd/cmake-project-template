@@ -1,57 +1,35 @@
 cmake_minimum_required(VERSION 3.11)
 
-###############################################################################
-# Set default CMAKE_BUILD_TYPE
-###############################################################################
-if(NOT DEFINED CMAKE_BUILD_TYPE)
-    set(default_build_type "Debug")
-    string(CONCAT message
-        "Setting CMAKE_BUILD_TYPE to '${default_build_type}' "
-        "as none was specified."
-    )
-    message(STATUS ${message})
-    string(CONCAT out
-        "Choose the type of build, options are: "
-        "None(CMAKE_CXX_FLAGS or CMAKE_C_FLAGS used) "
-        "Debug Release RelWithDebInfo MinSizeRel."
-    )
-    set(CMAKE_BUILD_TYPE "${default_build_type}" CACHE STRING ${out} FORCE)
-endif()
-
-###############################################################################
-# Set default BUILD_TESTS
-###############################################################################
-if(NOT DEFINED BUILD_TESTS)
-    set(BUILD_TESTS TRUE)
-    string(CONCAT message
-      "Setting BUILD_TESTS to 'TRUE' "
-      "as none was specified."
-    )
-    message(STATUS ${message})
-endif()
+set(CMAKE_MODULE_PATH cmake)
+include(preamble)
 
 ###############################################################################
 # Create Project
 ###############################################################################
-project(libhello VERSION 0.1.0)
-
-# Set target name and target output (lib wil be automaticaly appended)
-set(target_name libhello)
-set(target_output_name hello)
-
-# Set export variables
-set(targets_export_name ${PROJECT_NAME}-exports)
-set(export_namespace_name ${PROJECT_NAME}::)
+project(helloworld VERSION 0.1.0)
 
 ###############################################################################
 # Create target
 ###############################################################################
 
+# Set target name and target output name
+set(target_name helloworld)
+set(target_output_name helloworld)
+
+# Set export variables
+set(targets_export_name ${PROJECT_NAME}-exports)
+set(export_namespace_name ${PROJECT_NAME}::)
+set(namespace_qualified_target_name ${export_namespace_name}${target_output_name})
+
 # Set Library sources
-set(sources src/hello.cpp)
+set(sources
+    src/helloworld/hello.cpp
+    src/helloworld/world.cpp
+    src/helloworld/helloworld.cpp
+)
 
 add_library(${target_name} ${sources})
-add_library(${export_namespace_name}${target_name} ALIAS ${target_name})
+add_library(${export_namespace_name}${target_output_name} ALIAS ${target_name})
 
 set_target_properties(${target_name} PROPERTIES
     OUTPUT_NAME ${target_output_name}
@@ -64,14 +42,28 @@ target_include_directories(${target_name} PUBLIC
     $<INSTALL_INTERFACE:include>
 )
 
-target_compile_features(${target_name} PUBLIC cxx_std_17)
+target_compile_features(${target_name} PUBLIC cxx_std_20)
 
 ###############################################################################
-# Test Library
+# Unit testing
 ###############################################################################
 if(BUILD_TESTS)
-    enable_testing()
-    add_subdirectory(test)
+    find_package(GTest)
+
+    set(test_sources
+        src/helloworld/hello.test.cpp
+        src/helloworld/world.test.cpp
+        src/helloworld/helloworld.test.cpp
+    )
+
+    add_executable(${target_name}_test ${test_sources})
+
+    target_link_libraries(${target_name}_test
+        PRIVATE ${namespace_qualified_target_name}
+        PRIVATE GTest::gtest_main
+    )
+
+    target_compile_features(${target_name} PUBLIC cxx_std_20)
 endif()
 
 ###############################################################################

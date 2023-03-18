@@ -4,13 +4,11 @@ This is a template for a single library in c++
 
 ## Build
 ``` bash
-mkdir build
-cd build
-cmake ..
-make
+cmake -S . -B build -G Ninja -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+ninja -C build
 ```
+
 ## Test
 ``` bash
-cd build
-make test
+./build/*_test --gtest_color=true
 ```

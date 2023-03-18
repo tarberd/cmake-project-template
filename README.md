@@ -1,38 +1,27 @@
 # Cmake project template
 
-This template supports any numer of subproject for libraries and executables.
+This template implements a modern multi-repo approach for modern C++ libraries and executables and can easily be adapted to a mono-repo if single target is desired.
 
-Every subproject is self-contained and can be isolated with no changes needed.
+Every multi-repo subproject is self-contained and can be isolated with no changes needed (except the preamble.cmake module).
 
-This project can be viewd as macroproject of many selfcontained projects.
-
-# Build as Macro project
+# Build as multi-repo project
 ``` bash
-mkdir build
-cd build
-cmake ..
-make
+cmake -S . -B build -G Ninja -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+ninja -C build
 ```
 
-## Test 
+## Test
 ``` bash
-cd build
-make test
+./build/<subproject>/*_test --gtest_color=true
 ```
 
 # Build one project at a time
 ```
-cd mylib
-mkdir build && cd build
-cmake ..
-make -j
-make install
+cmake -S <path_to_subproject> -B build -G Ninja -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 ```
 
-```
-cd mybin
-mkdir build && cd build
-cmake ..
-make -j
-make install
-```
+# References:
+
+Project layouts are based on the [pitchfork](https://github.com/vector-of-bool/pitchfork) proposal.
+
+CMakelist file architecture inspired by the great talk by Daniel Pfeifer [Effective Cmake](https://youtu.be/bsXLMQ6WgIk).
